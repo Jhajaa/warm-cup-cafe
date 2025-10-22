@@ -17,10 +17,16 @@ COPY . .
 RUN chown -R www-data:www-data /var/www/html
 RUN chmod -R 755 /var/www/html
 
-# Configure Apache to serve PHP files
-RUN echo '<Directory /var/www/html>' >> /etc/apache2/apache2.conf
-RUN echo '    AllowOverride All' >> /etc/apache2/apache2.conf
-RUN echo '</Directory>' >> /etc/apache2/apache2.conf
+# Create Apache configuration for PHP
+RUN echo '<VirtualHost *:80>' > /etc/apache2/sites-available/000-default.conf
+RUN echo '    DocumentRoot /var/www/html' >> /etc/apache2/sites-available/000-default.conf
+RUN echo '    <Directory /var/www/html>' >> /etc/apache2/sites-available/000-default.conf
+RUN echo '        AllowOverride All' >> /etc/apache2/sites-available/000-default.conf
+RUN echo '        Require all granted' >> /etc/apache2/sites-available/000-default.conf
+RUN echo '    </Directory>' >> /etc/apache2/sites-available/000-default.conf
+RUN echo '    ErrorLog ${APACHE_LOG_DIR}/error.log' >> /etc/apache2/sites-available/000-default.conf
+RUN echo '    CustomLog ${APACHE_LOG_DIR}/access.log combined' >> /etc/apache2/sites-available/000-default.conf
+RUN echo '</VirtualHost>' >> /etc/apache2/sites-available/000-default.conf
 
 # Expose port 80
 EXPOSE 80
