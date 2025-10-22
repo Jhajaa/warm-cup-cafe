@@ -1,10 +1,9 @@
 services:
   - type: web
     name: warm-cup-cafe-backend
-    env: php
+    env: docker
     plan: free
-    buildCommand: echo "No build step required for PHP"
-    startCommand: php -S 0.0.0.0:$PORT
+    dockerfilePath: ./Dockerfile
     envVars:
       - key: DATABASE_URL
         sync: false
@@ -16,5 +15,3 @@ services:
         value: your-database-user
       - key: DB_PASS
         value: your-database-password
-      - key: PORT
-        value: 10000
