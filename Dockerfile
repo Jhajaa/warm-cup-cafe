@@ -1,8 +1,8 @@
 # Use PHP 8.1 with Apache
 FROM php:8.1-apache
 
-# Install MySQL PDO extension
-RUN docker-php-ext-install pdo pdo_mysql
+# Install MySQL and PostgreSQL PDO extensions
+RUN docker-php-ext-install pdo pdo_mysql pdo_pgsql
 
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
