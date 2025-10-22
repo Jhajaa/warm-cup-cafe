@@ -1,13 +1,14 @@
 RewriteEngine On
 
+# Add CORS headers for all requests
+Header always set Access-Control-Allow-Origin "https://warm-cup-cafe.netlify.app"
+Header always set Access-Control-Allow-Methods "GET, POST, OPTIONS"
+Header always set Access-Control-Allow-Headers "Content-Type, Authorization"
+Header always set Access-Control-Allow-Credentials "true"
+
 # Handle CORS preflight requests
 RewriteCond %{REQUEST_METHOD} OPTIONS
 RewriteRule ^(.*)$ $1 [R=200,L]
-
-# Serve PHP files directly
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^([^/]+)\.php$ $1.php [L]
 
 # Default to index.php for root requests
 DirectoryIndex index.php

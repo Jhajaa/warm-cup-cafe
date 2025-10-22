@@ -9,8 +9,8 @@ RUN apt-get update && apt-get install -y \
 # Install MySQL and PostgreSQL PDO extensions
 RUN docker-php-ext-install pdo pdo_mysql pdo_pgsql
 
-# Enable Apache mod_rewrite
-RUN a2enmod rewrite
+# Enable Apache mod_rewrite and mod_headers
+RUN a2enmod rewrite headers
 
 # Set working directory
 WORKDIR /var/www/html
