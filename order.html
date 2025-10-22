@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Coffee</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #F1F0E4;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 600px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #3d3d3d;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin: 12px 0 5px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    textarea {
+      resize: none;
+      height: 80px;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      background: #857979;
+      color: white;
+      font-size: 16px;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .btn:hover {
+      background: #5b4646;
+    }
+
+    .back-link {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .back-link a {
+      color: #5b4646;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .back-link a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Order Your Coffee</h2>
+    <form action="submit_order.php" method="post">
+      <!-- Customer Info -->
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="name" placeholder="Enter your name" required>
+
+      <label for="phone">Phone Number</label>
+      <input type="tel" id="phone" name="phone" placeholder="09XX-XXX-XXXX" required>
+
+      <!-- Coffee Selection -->
+      <label for="drink">Select Drink</label>
+      <select id="drink" name="drink" required>
+        <option value="">-- Choose a Drink --</option>
+        <option value="espresso">Espresso - ₱130</option>
+        <option value="latte">Latte - ₱150</option>
+        <option value="cappuccino">Cappuccino - ₱160</option>
+        <option value="americano">Americano - ₱120</option>
+      </select>
+
+      <label for="size">Size</label>
+      <select id="size" name="size" required>
+        <option value="small">Small</option>
+        <option value="medium">Medium (+₱20)</option>
+        <option value="large">Large (+₱40)</option>
+      </select>
+
+      <label for="quantity">Quantity</label>
+      <input type="number" id="quantity" name="quantity" value="1" min="1" required>
+
+      <!-- Notes -->
+      <label for="notes">Additional Notes</label>
+      <textarea id="notes" name="notes" placeholder="E.g. less sugar, extra shot..."></textarea>
+
+      <!-- Submit -->
+      <button type="submit" class="btn">Place Order</button>
+    </form>
+
+    <div class="back-link">
+      <a href="menu.html">← Back to Menu</a>
+    </div>
+  </div>
+</body>
+</html>

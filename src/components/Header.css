@@ -1,0 +1,19 @@
+.user-greeting {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-right: 10px;
+}
+
+.auth-buttons button {
+  background: #857979;
+  color: white;
+  border: none;
+  padding: 0.7rem 1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.auth-buttons button:hover {
+  background: #5b4646;
+}

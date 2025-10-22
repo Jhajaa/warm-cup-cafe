@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Warm Cup Café — Minimalist Coffee Shop</title>
+    <style>
+        :root {
+            --bg: #F1F0E4;
+            --surface: #f6f6f6;
+            --text: #1a1a1a;
+            --muted: #6b7280;
+            --accent: #0f766e;
+            --ring: #d1d5db;
+            --radius: 16px;
+            --shadow: 0 8px 30px rgba(0, 0, 0, .06);
+            --max: 1100px;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        html,
+
+        body {
+            height: 100%;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI,
+                Roboto, Helvetica, Arial;
+            color: var(--text);
+            background: var(--bg);
+            line-height: 1.55;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+            transition: color .2s ease;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+            border-radius: var(--radius);
+        }
+
+        .container {
+            max-width: var(--max);
+            margin-inline: auto;
+            padding: 0 20px;
+        }
+
+        .stack {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 999;
+
+            background: rgba(255, 255, 255, 0.85);
+            border-bottom: 1px solid var(--ring);
+            backdrop-filter: saturate(180%) blur(10px);
+            -webkit-backdrop-filter: saturate(180%) blur(10px);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+            position: relative;
+        }
+
+        .brand {
+            font-weight: 700;
+            letter-spacing: .5px;
+        }
+
+        .brand span {
+            display: inline-block;
+            padding: .35rem .7rem;
+            border: 1px solid var(--ring);
+            border-radius: 999px;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 18px;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            transition: max-height 0.3s ease;
+        }
+
+        nav a {
+            padding: 8px 10px;
+            border-radius: 10px;
+            display: block;
+        }
+
+        nav a:hover {
+            background: var(--surface);
+
+            color: var(--accent);
+        }
+
+        .cta {
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            padding: .7rem 1rem;
+            border-radius: 999px;
+            background: var(--text);
+            color: #fff;
+            white-space: nowrap;
+            background-color: #857979;
+        }
+
+        .cta:hover {
+            opacity: .9;
+            background: #5b4646
+        }
+
+        section {
+            padding: 48px 0;
+            border-top: 1px solid var(--ring);
+        }
+
+        .section-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .section-head h2 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .muted {
+            color: var(--muted);
+        }
+
+        .grid {
+            display: grid;
+
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+        }
+
+        .card {
+            background: #fff;
+            border: 1px solid var(--ring);
+            border-radius: var(--radius);
+            padding: 16px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: center;
+            text-align: center;
+        }
+
+        .card img {
+            height: 180px;
+            object-fit: cover;
+        }
+
+        #hero {
+            background:
+                url('https://static.vecteezy.com/system/resources/previews/043/042/360/non_2x/ai-generated-minimalistic-background-with-coffee-beans-and-a-cup-of-hot-espresso-white-space-for-text-or-design-on-the-left-side-top-view-style-white-empty-space-for-an-advertising-banner-free-photo.jpg') center/cover no-repeat;
+            color: rgb(42, 35, 35);
+            padding: 100px 20px;
+            text-align: center;
+        }
+
+        #hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        #hero p {
+            font-size: 1.2rem;
+            color: rgb(95, 89, 89);
+        }
+
+        /* Hamburger styles */
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            cursor: pointer;
+            width: 28px;
+            height: 24px;
+            gap: 4px;
+            z-index: 1000;
+        }
+
+        .hamburger div {
+            height: 3px;
+            background: var(--text);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        /* Show hamburger on small screens */
+        @media (max-width: 560px) {
+            nav ul {
+                position: absolute;
+                top: 64px;
+                right: 0;
+                background: white;
+                width: 200px;
+                flex-direction: column;
+                gap: 0;
+                border: 1px solid var(--ring);
+                border-radius: var(--radius);
+                max-height: 0;
+                overflow: hidden;
+                box-shadow: var(--shadow);
+                transition: max-height 0.3s ease;
+            }
+
+            nav ul.show {
+                max-height: 500px;
+
+            }
+
+            nav ul li {
+                border-bottom: 1px solid var(--ring);
+            }
+
+            nav ul li:last-child {
+                border-bottom: none;
+            }
+
+            nav a {
+                padding: 12px 16px;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .cta {
+                display: none;
+            }
+        }
+
+        footer {
+            padding: 20px 0;
+            text-align: center;
+            border-top: 1px solid var(--ring);
+        }
+
+        /* Back to top button */
+        #backToTop {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            padding: 12px 16px;
+            font-size: 16px;
+            background: var(--text);
+            color: white;
+            border: none;
+            border-radius: 999px;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            display: none;
+            z-index: 1000;
+            transition: opacity 0.3s ease;
+        }
+
+        #backToTop.show {
+            display: block;
+
+        }
+
+        nav a.active {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .order-btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 18px;
+            background: #857979;
+            color: #fff;
+            font-weight: bold;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+
+        .order-btn:hover {
+            background: #5b4646;
+        }
+
+        .price {
+            font-weight: bold;
+            color: rgb(66, 52, 52);
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 10px;
+            /* space between buttons */
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container nav">
+            <a class="brand" href="#"><span>Warm Cup Café</span></a>
+            <nav aria-label="Primary">
+                <ul id="navList">
+                    <li><a href="#featured">Featured</a></li>
+                    <li><a href="#menu">Menu</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#visit">Visit</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <a class="cta" href="order.php" aria-label="Order now">Order</a>
+                <a class="cta" href="login.php" aria-label="Login">Login</a>
+            </div>
+
+            <div class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false" role="button"
+                tabindex="0">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </header>
+    <section id="hero">
+        <h1>Welcome to Warm Cup Café</h1>
+        <p>A minimalist coffee experience for those who savor every sip.</p>
+    </section>
+    <section id="featured">
+        <div class="container">
+            <div class="section-head">
+                <h2>Featured Drinks</h2>
+                <p class="muted">Our seasonal favorites</p>
+            </div>
+            <div class="grid">
+                <div class="card">
+
+                    <img src="https://perfectdailygrind.com/wp-content/uploads/2018/11/flat-white-1024x640.jpg"
+                        alt="Flat White">
+                    <h3>Flat White</h3>
+                    <p class="muted">Velvety microfoam over rich espresso</p>
+                </div>
+                <div class="card">
+
+                    <img src="https://www.justonecookbook.com/wp-content/uploads/2022/12/Matcha-Latte-4598-I-1-500x375.jpg"
+                        alt="Matcha Latte">
+
+                    <h3>Matcha Latte</h3>
+                    <p class="muted">Creamy matcha with steamed milk</p>
+                </div>
+                <div class="card">
+
+                    <img src="https://i2.wp.com/melscoffeetravels.com/wp-content/uploads/2023/10/IMG_1559-scaled.jpg?fit=1024%2C683&ssl=1"
+                        alt="Cold Brew">
+
+                    <h3>Cold Brew</h3>
+                    <p class="muted">Smooth, bold, and refreshing</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="menu">
+        <div class="container">
+            <div class="section-head">
+                <h2>Our Menu</h2>
+                <p class="muted">Freshly brewed, always delightful</p>
+            </div>
+            <div class="grid">
+                <div class="card">
+
+                    <img src="https://cdn.prod.website-files.com/63e8e2c268e3264531e67ac9/651d40d207d6e4f2a8e9804f_roasters.blog.espresso.drinks.jpg"
+                        alt="Espresso">
+                    <h3>Espresso</h3>
+                    <p class="muted">Intense and rich, served in a small cup</p>
+                    <p class="price">₱130</p>
+                    <a href="order.php" class="order-btn">Order Now</a>
+                </div>
+                <div class="card">
+                    <img src="https://www.acouplecooks.com/wp-content/uploads/2020/10/how-to-make-cappuccino-005.jpg"
+                        alt="Cappuccino">
+
+                    <h3>Cappuccino</h3>
+                    <p class="muted">Perfect balance of espresso, milk, and foam</p>
+                    <p class="price">₱115</p>
+                    <a href="order.php" class="order-btn">Order Now</a>
+                </div>
+
+                <div class="card">
+                    <img src="https://myeverydaytable.com/wp-content/uploads/AmericanoHotandIced-3.jpg" alt="Americano">
+
+                    <h3>Americano</h3>
+                    <p class="muted">Smooth espresso diluted with hot water</p>
+                    <p class="price">₱120</p>
+                    <a href="order.php" class="order-btn">Order Now</a>
+                </div>
+                <div class="card">
+
+                    <img src="https://vibrantlygfree.com/wp-content/uploads/2023/07/iced-mocha-1.jpg" alt="Mocha">
+
+                    <h3>Mocha</h3>
+                    <p class="muted">Chocolate-infused espresso with steamed milk</p>
+                    <p class="price">₱70</p>
+                    <a href="order.php" class="order-btn">Order Now</a>
+                </div>
+                <div class="card">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxCC9mkH4WFv2bs6fBogqb1jT8Y9ywKWUFHQ&s"
+                        alt="Latte">
+
+                    <h3>Latte</h3>
+                    <p class="muted">Smooth espresso with a creamy milk layer</p>
+                    <p class="price">₱80</p>
+                    <a href="order.php" class="order-btn">Order Now</a>
+                </div>
+                <div class="card">
+
+                    <img src="https://dinnerthendessert.com/wp-content/uploads/2023/10/Caramel-Macchiato-10.jpg"
+                        alt="Caramel Macchiato">
+
+                    <h3>Caramel Macchiato</h3>
+                    <p class="muted">Espresso layered with milk and caramel drizzle</p>
+                    <p class="price">₱150</p>
+                    <a href="order.php" class="order-btn">Order Now</a>
+                </div>
+                <div class="card">
+
+                    <img src="https://frostingandfettuccine.com/wp-content/uploads/2022/12/Caramel-Iced-Coffee-6.jpg"
+                        alt="Iced Coffee">
+
+                    <h3>Iced Coffee</h3>
+                    <p class="muted">Chilled coffee served over ice for refreshment</p>
+                    <p class="price">₱100</p>
+                    <a href="order.php" class="order-btn">Order Now</a>
+                </div>
+                <div class="card">
+
+                    <img src="https://markieskitchen.com/wp-content/uploads/2023/06/hazelnut-iced-coffee-1.jpg"
+                        alt="Hazelnut Coffee">
+
+                    <h3>Hazelnut Coffee</h3>
+                    <p class="muted">Nutty and aromatic, perfect for cozy moments</p>
+                    <p class="price">₱199</p>
+                    <a href="order.php" class="order-btn">Order Now</a>
+                </div>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="menu.html" class="cta">View All Menu</a>
+        </div>
+
+
+    </section>
+    <section id="about">
+        <div class="container">
+            <div class="section-head">
+                <h2>About Us</h2>
+            </div>
+            <p>At Warm Cup Café, we believe in simplicity. Our space is designed
+                to help you relax and enjoy coffee without distractions. Every cup is
+                brewed with care, using only the finest beans.</p>
+        </div>
+    </section>
+    <section id="visit">
+        <div class="container">
+            <div class="section-head">
+                <h2>Visit Us</h2>
+            </div>
+            <p>123 Coffee Lane, Cabuyao City</p>
+            <p>Open daily: 7 AM – 9 PM</p>
+            <div style="margin-top: 20px; border-radius: 12px; overflow: hidden;">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3871.580639779757!2d121.1277775!3d14.2752779!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33bd630d3356d697%3A0xf557621baa9b52b4!2sCabuyao%2C%20Laguna!5e0!3m2!1sen!2sph!4v1723555555555!5m2!1sen!2sph"
+                    width="100%" height="350" style="border:0;" allowfullscreen loading="lazy"></iframe>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div class="container">
+            <p class="muted">© <span id="year"></span> Warm Cup Café Coffee Shop. All rights
+                reserved.</p>
+        </div>
+    </footer>
+    <button id="backToTop" aria-label="Back to top">↑</button>
+    <script>
+
+        // Update footer year
+        document.getElementById('year').textContent = new Date().getFullYear();
+        // Hamburger toggle
+        const hamburger = document.getElementById('hamburger');
+        const navList = document.getElementById('navList');
+        function closeMenuOnResize() {
+            if (window.innerWidth > 560) {
+                navList.classList.remove('show');
+                hamburger.setAttribute('aria-expanded', 'false');
+            }
+        }
+        hamburger.addEventListener('click', () => {
+            const expanded = hamburger.getAttribute('aria-expanded') === 'true';
+            if (expanded) {
+                navList.classList.remove('show');
+                hamburger.setAttribute('aria-expanded', 'false');
+            } else {
+                navList.classList.add('show');
+                hamburger.setAttribute('aria-expanded', 'true');
+            }
+        });
+        // Close menu when clicking nav links (on small screens)
+        navList.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 560) {
+                    navList.classList.remove('show');
+                    hamburger.setAttribute('aria-expanded', 'false');
+                }
+            });
+        });
+        window.addEventListener('resize', closeMenuOnResize);
+        // Back to Top button
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTop.classList.add('show');
+            } else {
+
+                backToTop.classList.remove('show');
+            }
+        });
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        // Smooth scrolling for navigation links
+        const smoothScrollLinks = document.querySelectorAll('nav a, #backToTop');
+        smoothScrollLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                window.scrollTo({
+                    top: targetElement.offsetTop - 64, // 64px offset for header
+                    behavior: 'smooth'
+                });
+            });
+        });
+        // Active link highlighting on scroll
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('nav a');
+        window.addEventListener('scroll', () => {
+            let currentSection = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
+                if (window.scrollY >= sectionTop - 64 && window.scrollY < sectionTop + sectionHeight
+                    - 64) {
+
+                    currentSection = section.getAttribute('id');
+                }
+            });
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === currentSection) {
+
+                    link.classList.add('active');
+                }
+            });
+        });
+        // Add active class styling in CSS
+        document.head.insertAdjacentHTML('beforeend', `
+        <style>
+            nav a.active {
+                color: var(--accent);
+                font-weight: 600;
+            }
+        </style>
+`);
+    </script>
+
+</body>
+
+</html>

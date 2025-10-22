@@ -1,0 +1,16 @@
+{
+    "name": "warm-cup-cafe/backend",
+    "description": "Warm Cup Café Backend API",
+    "type": "project",
+    "require": {
+        "php": ">=7.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "scripts": {
+        "start": "php -S 0.0.0.0:${PORT:-10000}"
+    }
+}
