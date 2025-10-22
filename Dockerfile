@@ -1,6 +1,11 @@
 # Use PHP 8.1 with Apache
 FROM php:8.1-apache
 
+# Install system dependencies and PostgreSQL client libraries
+RUN apt-get update && apt-get install -y \
+    libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
+
 # Install MySQL and PostgreSQL PDO extensions
 RUN docker-php-ext-install pdo pdo_mysql pdo_pgsql
 
